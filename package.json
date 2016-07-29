@@ -1,0 +1,33 @@
+{
+  "name": "portal",
+  "version": "1.0.0",
+  "description": "An very simple wrapper around `postMessage` that makes cross-domain communication with iframes easy.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/g-wilson/portal.git"
+  },
+  "keywords": [
+    "cross-domain",
+    "iframe",
+    "sso",
+    "postMessage"
+  ],
+  "author": "George Wilson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/g-wilson/portal/issues"
+  },
+  "homepage": "https://github.com/g-wilson/portal#readme",
+  "devDependencies": {
+    "event-stream": "^3.3.4",
+    "gulp": "^3.9.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-streamify": "^1.0.2",
+    "gulp-uglify": "^1.5.4",
+    "gulp-umd": "^0.2.0"
+  }
+}

@@ -18,7 +18,7 @@ JS in your iframe e.g. "https://sso.mydomain.com/crossdomain.html"
 with `<script src="/path/to/portal.server.min.js"></script>` or module-load it.
 
 ```
-var PortalServer = require('portal').Server;
+var PortalServer = require('iframe-portal').Server;
 // or use window.PortalServer
 
 var portal = new PortalServer({
@@ -37,7 +37,7 @@ JS on the client page e.g. "http://untrusteddomain.com"
 with `<script src="/path/to/portal.client.min.js"></script>` or module-load it.
 
 ```
-var PortalClient = require('portal').Client;
+var PortalClient = require('iframe-portal').Client;
 // or use: window.PortalClient
 
 var portal = new PortalClient({

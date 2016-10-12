@@ -52,6 +52,13 @@ portal.on('PONG', function (payload) {
 portal.start(function () {
   // We can start sending events now that the "portal is open"
   portal.send('PING');
+
+  // We can attach callbacks to some events
+  portal.send('DO_ASYNC_THING', { foo: 'bar' }, function (err, payload) {
+    // Err will be an error object if the callback is not called in time (5 seconds).
+    // Do something with payload?
+  });
+
 });
 
 ```

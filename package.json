@@ -1,6 +1,6 @@
 {
   "name": "iframe-portal",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "An very simple wrapper around `postMessage` that makes cross-domain communication with iframes easy.",
   "main": "index.js",
   "scripts": {

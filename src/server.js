@@ -22,15 +22,36 @@ PortalServer.prototype.on = function (name, callback) {
   this.callbacks[name] = callback;
 };
 
-PortalServer.prototype.send = function(type, payload) {
-  if (!this.parentOrigin) throw new Error('Cannot send message to parent, no parent origin specified');
-  window.parent.postMessage({ type: type, payload: payload }, this.parentOrigin);
+PortalServer.prototype.start = function () {
+  window.addEventListener('message', this.handleMessage.bind(this));
 };
 
-PortalServer.prototype.start = function () {
-  window.addEventListener('message', function (e) {
-    if (this.allowed_origins.indexOf(e.origin || e.originalEvent.origin) < 0) return;
-    if ((e.origin || e.originalEvent.origin) !== this.parentOrigin) return;
-    if (this.callbacks[e.data.type]) this.callbacks[e.data.type](e.data.payload);
-  }.bind(this));
+PortalServer.prototype.handleMessage = function (e) {
+  if (this.allowed_origins.indexOf(e.origin || e.originalEvent.origin) < 0) return;
+  if ((e.origin || e.originalEvent.origin) !== this.parentOrigin) return;
+  if (!this.callbacks[e.data.type]) return;
+  this.callbacks[e.data.type](e.data.payload, this.send.bind(this, e.data.response));
+};
+
+PortalServer.prototype.send = function (name, payload, callback) {
+  if (!this.parentOrigin) throw new Error('Cannot send message to parent, no parent origin specified');
+  var hasTriggered = false;
+
+  if (callback) {
+    this.on('_RESPONSE_' + name, function (responsePayload) {
+      hasTriggered = true;
+      this.callbacks['_RESPONSE_' + name] = null;
+      callback.call(this, null, responsePayload);
+    }.bind(this));
+    window.setTimeout(function () {
+      var err = new Error('Portal callback for ' + name + ' timed out');
+      if (!hasTriggered) callback(err);
+    }, 5000);
+  }
+
+  window.parent.postMessage({
+    type: name,
+    payload: payload,
+    response: '_RESPONSE_' + name,
+  }, this.parentOrigin);
 };

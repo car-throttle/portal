@@ -34,11 +34,15 @@ PortalClient.prototype.insertFrame = function (callback) {
   frame.style.position = 'absolute';
   frame.style.top = '-100px';
   frame.style.left = '-100px';
+  frame.style.border = 'none';
+  frame.style.width = '0';
+  frame.style.height = '0';
 
   frame.onload = function () {
     this.contentWindow = frame.contentWindow;
     if (callback) callback();
   }.bind(this);
+
   document.body.appendChild(frame);
 };
 
